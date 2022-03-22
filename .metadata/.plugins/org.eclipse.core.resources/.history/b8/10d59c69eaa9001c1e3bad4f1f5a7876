@@ -1,0 +1,10 @@
+package edu.unisys.academy.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "alumnos")
+public class Alumno {
+
+}

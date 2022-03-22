@@ -1,0 +1,40 @@
+package edu.unisys.academy.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import edu.unisys.academy.model.Alumno;
+
+/*
+ * RECIBO Y RESPONDO AL USUARIO HTTP
+ * - POSTMAN -
+ * 
+ * API REST sobre Alumnos
+ * - Leer todos los alumnos
+ * - Leer un alumno
+ * - Modificar un alumno
+ * - Borrar un alumno
+ * 
+ */
+
+//GET http://localhost:8081/alumno/prueba
+
+@RestController
+@RequestMapping("/alumno")
+public class AlumnoController {
+	
+	@GetMapping("/prueba")
+	public Alumno pruebaAlumno() {
+		
+		Alumno alumno = null;
+		
+			alumno.setId(15L);
+			alumno.setNombre("Alicia");
+			alumno.setApellido("Morillo");
+			alumno.setEdad(34);
+		
+		return alumno;
+	}
+
+}
