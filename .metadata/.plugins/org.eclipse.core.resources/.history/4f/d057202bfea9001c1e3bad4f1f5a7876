@@ -1,0 +1,7 @@
+package edu.unisys.academy.repository;
+
+import org.springframework.data.repository.CrudRepostory;
+
+public class AlumnoRepositorySpringData extends CrudRepository<Alumno, Long> {
+
+}

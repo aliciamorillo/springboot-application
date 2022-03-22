@@ -1,0 +1,11 @@
+package edu.unisys.academy.repository;
+
+import org.springframework.data.repository.CrudRepostory;
+import org.springframework.stereotype.Service;
+
+import edu.unisys.academy.model.Alumno;
+
+@Service
+public class AlumnoRepositorySpringData extends CrudRepository<Alumno, Long> {
+
+}

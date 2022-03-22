@@ -1,0 +1,53 @@
+package edu.unisys.academy.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import edu.unisys.academy.model.Alumno;
+import edu.unisys.academy.repository.AlumnoRepositorySpringData;
+
+
+@Service
+public class AlumnoServiceImpl implements AlumnoService {
+	
+	/*
+	 * Acceder BD: dos formas:
+	 * - Antigua: Hibernate contexto de Persistencia
+	 * - Moderna: Spring Data JPA
+	 */
+	
+	@Autowired
+	private AlumnoRepositorySpringData alumnoRepositorySpringData;
+
+	@Override
+	public Iterable<Alumno> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<Alumno> findById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Alumno save(Alumno alumno) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Alumno update(Alumno alumno, Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

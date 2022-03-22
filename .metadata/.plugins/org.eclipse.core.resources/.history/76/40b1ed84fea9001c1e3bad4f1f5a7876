@@ -1,0 +1,10 @@
+package edu.unisys.academy.repository;
+
+import org.springframework.data.repository.CrudRepostory;
+import org.springframework.data.repository.core.support.DefaultCrudMethods;
+
+import edu.unisys.academy.model.Alumno;
+
+public class AlumnoRepositorySpringData extends DefaultCrudMethods {
+
+}

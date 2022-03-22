@@ -1,0 +1,5 @@
+package edu.unisys.academy.service;
+
+public interface AlumnoService {
+
+}

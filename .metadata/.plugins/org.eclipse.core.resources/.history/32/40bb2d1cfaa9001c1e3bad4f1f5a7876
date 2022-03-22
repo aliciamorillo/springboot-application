@@ -1,0 +1,6 @@
+package edu.unisys.academy.service;
+
+// Describir operaciones que se pueden realizar con el alumno
+public interface AlumnoService {
+
+}

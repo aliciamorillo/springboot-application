@@ -1,0 +1,47 @@
+package edu.unisys.academy.service;
+
+import java.util.Optional;
+import org.springframework.stereotype.Service;
+import edu.unisys.academy.model.Alumno;
+
+
+@Service
+public class AlumnoServiceImpl implements AlumnoService {
+	
+	/*
+	 * Acceder BD: dos formas:
+	 * - Antigua: Hibernate contexto de Persistencia
+	 * - Moderna: Spring Data
+	 */
+
+	@Override
+	public Iterable<Alumno> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<Alumno> findById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Alumno save(Alumno alumno) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Alumno update(Alumno alumno, Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
