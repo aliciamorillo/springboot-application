@@ -1,6 +1,11 @@
 package edu.unisys.academy.controller;
 
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,11 +43,17 @@ public class AlumnoController {
 	@Autowired
 	private AlumnoService alumnoService;
 	
+	Logger log = LoggerFactory.getLogger(AlumnoController.class);
+	
 	@GetMapping("/prueba")
 	public Alumno pruebaAlumno() {
 		
 		Alumno alumno = null; // para Hibernate: alumno: estado TRANSIENT
-			alumno = new Alumno();
+			
+			log.debug("Entrando en /prueba");
+			log.info("entrando en /prueba info");
+			
+			alumno = new Alumno(); //Aquí el alumno está en estado TRANSIENT: no existe
 			alumno.setId(15L);
 			alumno.setNombre("Alicia");
 			alumno.setApellido("Morillo");
@@ -65,22 +76,60 @@ public class AlumnoController {
 	
 	@GetMapping("/{id}") //GET http://localhost:8081/alumno/3
 	public ResponseEntity<?> leerAlumnoPorId (@PathVariable Long id){
-		return null;
+		ResponseEntity<?> responseEntity = null;
+		Optional<Alumno> optionalAlumno = null;
+		Alumno alumnoLeido = null;
+		
+			optionalAlumno = this.alumnoService.findById(id);
+			
+			if(optionalAlumno.isPresent()) {
+				//El ID existe: tenemos un alumno leído de la BD
+				alumnoLeido = optionalAlumno.get();
+				responseEntity = ResponseEntity.ok(alumnoLeido);
+			} else {
+				//El ID no existe
+				responseEntity = ResponseEntity.noContent().build();
+			}
+			
+		return responseEntity;
 	}
 	
 	@PostMapping //POST http://localhost:8081/alumno/
 	public ResponseEntity<?> insertarAlumno (@RequestBody Alumno alumno){
-		return null;
+		ResponseEntity<?> responseEntity = null;
+		Alumno alumnoCreado = null;
+		
+			alumnoCreado = this.alumnoService.save(alumno);
+			responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(alumnoCreado); //201
+		
+		return responseEntity;
 	}
 	
 	@PutMapping("/{id}") //PUT http://localhost:8081/alumno/id
 	public ResponseEntity<?> modificarAlumno (@RequestBody Alumno alumno, @PathVariable Long id){
-		return null;
+		ResponseEntity<?> responseEntity = null;
+		Alumno alumnoActualizado = null;
+		
+			alumnoActualizado = this.alumnoService.update(alumno, id);
+			
+			if(alumnoActualizado != null) {
+				//Se ha modificado correctamente
+				responseEntity = ResponseEntity.ok(alumnoActualizado);
+			} else {
+				responseEntity = ResponseEntity.notFound().build();
+			}
+			
+		return responseEntity;
 	}
 	
 	@DeleteMapping("/{id}") //DELETE http://localhost:8081/alumno/id
 	public ResponseEntity<?> borrarAlumno (@PathVariable Long id){
-		return null;
+		ResponseEntity<?> responseEntity = null;
+			
+			this.alumnoService.deleteById(id);
+			responseEntity = ResponseEntity.ok().build();
+	
+		return responseEntity;
 	}
 
 }

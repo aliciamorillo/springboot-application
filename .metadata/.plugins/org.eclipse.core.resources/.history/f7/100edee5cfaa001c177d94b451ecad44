@@ -1,0 +1,18 @@
+package edu.unisys.academy.repository;
+
+import java.util.List;
+
+import edu.unisys.academy.model.Alumno;
+
+public interface AlumnoRepositoryHibernateJPA {
+	
+	Alumno leerAlumnoPorId(Long id);
+	
+	Alumno crearAlumnoPorId(Alumno alumno);
+	
+	List<Alumno> leerTodosLosAlumnos();
+	
+	Alumno actualizarAlumno(Alumno alumno);
+	
+	void borrarAlumno(Long id);
+}

@@ -1,0 +1,9 @@
+package edu.unisys.academy;
+
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+//Centraliza la gestión de excepciones en esta clase
+@RestControllerAdvice(basePackages = {"edu.unisys.academy"})
+public class GestionExcepciones {
+
+}
