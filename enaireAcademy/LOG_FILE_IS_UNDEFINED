@@ -566,3 +566,5 @@ Identify and stop the process that's listening on port 8081 or configure this ap
 2022-03-23 18:45:48.475  INFO 17512 --- [http-nio-8081-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2022-03-23 18:45:48.476  INFO 17512 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2022-03-23 18:45:48.479  INFO 17512 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-03-23 18:45:48.540 DEBUG 17512 --- [http-nio-8081-exec-2] e.u.academy.controller.AlumnoController  : Entrando en /prueba
+2022-03-23 18:45:48.541  INFO 17512 --- [http-nio-8081-exec-2] e.u.academy.controller.AlumnoController  : entrando en /prueba info
