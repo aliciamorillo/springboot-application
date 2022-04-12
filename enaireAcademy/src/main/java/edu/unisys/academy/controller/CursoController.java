@@ -64,11 +64,11 @@ public class CursoController {
     @PostMapping
     public ResponseEntity<?> insertarCurso(@RequestBody Curso Curso) {
         ResponseEntity<?> responseEntity = null; // representa el HTTP de vuelta
-        Curso curso_creado = null;
+        Curso cursoCreado = null;
 
         log.debug("Sin errores en la entrada");
-        curso_creado = this.cursoService.save(Curso);
-        responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(curso_creado);
+        cursoCreado = this.cursoService.save(Curso);
+        responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(cursoCreado);
 
         return responseEntity;
 
@@ -77,11 +77,11 @@ public class CursoController {
     @PutMapping("/{id}")
     public ResponseEntity<?> modificarCurso(@RequestBody Curso Curso, @PathVariable Long id) {
         ResponseEntity<?> responseEntity = null; // representa el HTTP de vuelta
-        Curso curso_actualizado = null;
+        Curso cursoActualizado = null;
 
-        curso_actualizado = this.cursoService.update(Curso, id);
-        if (curso_actualizado != null) {
-            responseEntity = ResponseEntity.ok(curso_actualizado);
+        cursoActualizado = this.cursoService.update(Curso, id);
+        if (cursoActualizado != null) {
+            responseEntity = ResponseEntity.ok(cursoActualizado);
         } else {
             responseEntity = ResponseEntity.notFound().build();
         }
