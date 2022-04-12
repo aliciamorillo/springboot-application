@@ -1,0 +1,95 @@
+package edu.unisys.academy.service;
+
+import java.util.Optional;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import edu.unisys.academy.model.Alumno;
+import edu.unisys.academy.repository.AlumnoRepositoryHibernateJPA;
+import edu.unisys.academy.repository.AlumnoRepositorySpringData;
+
+
+@Service
+public class AlumnoServiceImpl implements AlumnoService {
+	
+	/*
+	 * Acceder BD: dos formas:
+	 * - Antigua: Hibernate contexto de Persistencia
+	 * - Moderna: Spring Data JPA
+	 */
+	
+	@Autowired
+	private AlumnoRepositorySpringData alumnoRepositorySpringData;
+	
+	@Autowired
+	private AlumnoRepositoryHibernateJPA alumnoRepositoryHibernateJPA;
+
+	
+	@Override
+	@Transactional (readOnly = true)
+	public Iterable<Alumno> findAll() {
+		return this.alumnoRepositorySpringData.findAll();
+	}
+
+	@Override
+	@Transactional (readOnly = true)
+	public Optional<Alumno> findById(Long id) {
+		return this.alumnoRepositorySpringData.findById(id);
+	}
+
+	@Override
+	@Transactional 
+	public Alumno save(Alumno alumno) {
+		return this.alumnoRepositorySpringData.save(alumno);
+	}
+
+	@Override
+	@Transactional
+	public Alumno update(Alumno alumno, Long id) {
+		Alumno alumnoActualizado = null;
+		Alumno alumnoLeido = null;
+		Optional<Alumno> alumnoOptional = null;
+		
+		//1. Leer el alumno
+		alumnoOptional = this.alumnoRepositorySpringData.findById(id);
+		
+		if(alumnoOptional.isPresent()) {
+			alumnoLeido = alumnoOptional.get();
+			
+			//2. Modificar los atributos que desee
+			alumnoLeido.setApellido(alumno.getApellido());
+			alumnoLeido.setNombre(alumno.getNombre());
+			alumnoLeido.setEmail(alumno.getEmail());
+			alumnoLeido.setEdad(alumno.getEdad());
+			
+			//3. Hacer el save sobre el alumno modificado
+			alumnoActualizado = this.alumnoRepositorySpringData.save(alumnoLeido);
+		}
+
+		
+		return alumnoActualizado;
+	}
+
+	@Override
+	@Transactional
+	public void deleteById(Long id) {
+		this.alumnoRepositorySpringData.deleteById(id);
+	}
+	
+	
+	// CONSULTAS NO CRUD
+
+	@Override
+	@Transactional (readOnly = true)
+	public Iterable<Alumno> findByEdadBetween(int edadInicial, int edadFinal) {
+		return this.alumnoRepositorySpringData.findByEdadBetween(edadInicial, edadFinal);
+	}
+
+	@Override (readOnly = true)
+	public Iterable<Alumno> findByNombreLike(String patron) {
+		return this.alumnoRepositorySpringData.findByEdadBetween(edadInicial, edadFinal);
+	}
+}

@@ -1,0 +1,41 @@
+2022-03-25 08:38:27.049  INFO 19012 --- [Thread-91] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-03-25 08:38:27.315  INFO 19012 --- [Thread-91] com.zaxxer.hikari.HikariDataSource       : HikariPool-24 - Shutdown initiated...
+2022-03-25 08:38:27.334  INFO 19012 --- [Thread-91] com.zaxxer.hikari.HikariDataSource       : HikariPool-24 - Shutdown completed.
+2022-03-25 08:38:27.802  INFO 19012 --- [restartedMain] e.u.academy.EnaireAcademyApplication     : Starting EnaireAcademyApplication using Java 17.0.2 on ES-MORILLOA with PID 19012 (C:\Users\morilloa\Desktop\CURSOS\Spring\enaireAcademy\target\classes started by MorilloA in C:\Users\morilloa\Desktop\CURSOS\Spring\enaireAcademy)
+2022-03-25 08:38:27.803 DEBUG 19012 --- [restartedMain] e.u.academy.EnaireAcademyApplication     : Running with Spring Boot v2.6.4, Spring v5.3.16
+2022-03-25 08:38:27.803  INFO 19012 --- [restartedMain] e.u.academy.EnaireAcademyApplication     : No active profile set, falling back to 1 default profile: "default"
+2022-03-25 08:38:28.113  INFO 19012 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-03-25 08:38:28.125  INFO 19012 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 11 ms. Found 1 JPA repository interfaces.
+2022-03-25 08:38:28.284  INFO 19012 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2022-03-25 08:38:28.285  INFO 19012 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-25 08:38:28.285  INFO 19012 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-03-25 08:38:28.325  INFO 19012 --- [restartedMain] o.a.c.c.C.[Tomcat-4].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-03-25 08:38:28.326  INFO 19012 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 518 ms
+2022-03-25 08:38:28.503  INFO 19012 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-03-25 08:38:28.528  INFO 19012 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-25 - Starting...
+2022-03-25 08:38:28.612  INFO 19012 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-25 - Start completed.
+2022-03-25 08:38:28.613  INFO 19012 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+2022-03-25 08:38:28.826  INFO 19012 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-03-25 08:38:28.827  INFO 19012 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-03-25 08:38:29.069  WARN 19012 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-03-25 08:38:29.281  INFO 19012 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-03-25 08:38:29.312  INFO 19012 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2022-03-25 08:38:29.323  INFO 19012 --- [restartedMain] e.u.academy.EnaireAcademyApplication     : Started EnaireAcademyApplication in 1.611 seconds (JVM running for 63081.26)
+2022-03-25 08:38:29.326  INFO 19012 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-03-25 09:35:32.794  INFO 19012 --- [Thread-95] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-03-25 09:35:32.982  INFO 19012 --- [Thread-95] com.zaxxer.hikari.HikariDataSource       : HikariPool-25 - Shutdown initiated...
+2022-03-25 09:35:33.270  INFO 19012 --- [Thread-95] com.zaxxer.hikari.HikariDataSource       : HikariPool-25 - Shutdown completed.
+2022-03-25 09:35:36.026  INFO 19012 --- [restartedMain] e.u.academy.EnaireAcademyApplication     : Starting EnaireAcademyApplication using Java 17.0.2 on ES-MORILLOA with PID 19012 (C:\Users\morilloa\Desktop\CURSOS\Spring\enaireAcademy\target\classes started by MorilloA in C:\Users\morilloa\Desktop\CURSOS\Spring\enaireAcademy)
+2022-03-25 09:35:36.026 DEBUG 19012 --- [restartedMain] e.u.academy.EnaireAcademyApplication     : Running with Spring Boot v2.6.4, Spring v5.3.16
+2022-03-25 09:35:36.026  INFO 19012 --- [restartedMain] e.u.academy.EnaireAcademyApplication     : No active profile set, falling back to 1 default profile: "default"
+2022-03-25 09:35:36.801  INFO 19012 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-03-25 09:35:36.820  INFO 19012 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 1 JPA repository interfaces.
+2022-03-25 09:35:37.082  INFO 19012 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2022-03-25 09:35:37.083  INFO 19012 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-25 09:35:37.083  INFO 19012 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-03-25 09:35:37.170  INFO 19012 --- [restartedMain] o.a.c.c.C.[Tomcat-4].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-03-25 09:35:37.170  INFO 19012 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1139 ms
+2022-03-25 09:35:37.472  INFO 19012 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-03-25 09:35:37.488  INFO 19012 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-26 - Starting...
+2022-03-25 09:35:37.583  INFO 19012 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-26 - Start completed.
+2022-03-25 09:35:37.584  INFO 19012 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect

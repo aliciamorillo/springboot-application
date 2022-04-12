@@ -14,8 +14,19 @@ public class GestionExcepciones {
 		ResponseEntity<?> responseEntity = null;
 		String strException = null;
 		
-			strException = "Error detectado: " + strException.toString();
-			ResponseEntity.internalServerError().body(strException);
+			strException = "Error detectado SPRING DATA: " + strException.toString();
+			responseEntity = ResponseEntity.internalServerError().body(strException);
+				
+		return responseEntity;
+	}
+	
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<?> errorDeBorradoConHbJPA (IllegalArgumentException exception){
+		ResponseEntity<?> responseEntity = null;
+		String strException = null;
+		
+			strException = "Error detectado HB JPA: " + strException.toString();
+			responseEntity = ResponseEntity.internalServerError().body(strException);
 				
 		return responseEntity;
 	}

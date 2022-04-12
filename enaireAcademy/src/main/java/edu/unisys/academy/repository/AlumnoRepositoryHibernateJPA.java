@@ -7,11 +7,14 @@ public interface AlumnoRepositoryHibernateJPA {
 	
 	Alumno leerAlumnoPorId(Long id);
 	
-	Alumno crearAlumnoPorId(Alumno alumno);
+	Alumno crearAlumno(Alumno a);
 	
 	List<Alumno> leerTodosLosAlumnos();
 	
-	Alumno actualizarAlumno(Alumno alumno);
+	Alumno actualizarAlumno(Alumno a);
 	
 	void borrarAlumno(Long id);
+	
+	public Iterable<Alumno> mayoresDe50();
+	
 }

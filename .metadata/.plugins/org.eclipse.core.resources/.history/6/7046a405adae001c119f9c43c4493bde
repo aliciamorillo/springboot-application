@@ -1,0 +1,131 @@
+package edu.unisys.academy.model;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+@Table(name = "alumnos") //Nombre tabla en SQL
+public class Alumno {
+	
+	//Validación más pontente: regex
+	
+	@Id // Clave primaria: que sea un número
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //Usa autoincremento SQL
+	private Long id;
+	
+	//Validar el nombre para que tenga un tamaño entre 3-15 char
+	
+	@Size(min=3, max=15)
+	private String nombre;
+	
+	@NotEmpty  //@NotNull y longitud mayor que 1
+	private String apellido;
+	
+	@Email
+	private String email;
+	
+	@Min(0)
+	@Max(130)
+	private int edad;
+	
+	@JsonIgnore
+	private byte[] foto;
+	
+	//Quiero saber cuándo se importa un registro
+	
+	public byte[] getFoto() {
+		return foto;
+	}
+
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
+	}
+
+	@Column(name = "creado_en")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date creadoEn;
+	
+	@PrePersist //El método anotado así se ejecuta automáticamente antes de guardar el objeto en la BD
+	private void generarFecha() {
+		this.creadoEn =  new Date();
+	}
+	
+	
+	public Date getCreadoEn() {
+		return creadoEn;
+	}
+	public void setCreadoEn(Date creadoEn) {
+		this.creadoEn = creadoEn;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public String getApellido() {
+		return apellido;
+	}
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public int getEdad() {
+		return edad;
+	}
+	public void setEdad(int edad) {
+		this.edad = edad;
+	}
+
+	@Override
+	public String toString() {
+		return "Alumno [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email + ", edad="
+				+ edad + ", creadoEn=" + creadoEn + "]";
+	}
+
+
+	public Alumno(Long id, String nombre, String apellido, String email, int edad, Date creadoEn) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.edad = edad;
+		this.creadoEn = creadoEn;
+	}
+
+
+	public Alumno() {
+		super();
+	}
+	
+	
+	
+}

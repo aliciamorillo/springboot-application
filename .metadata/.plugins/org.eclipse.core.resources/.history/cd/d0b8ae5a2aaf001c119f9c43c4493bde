@@ -1,0 +1,306 @@
+package edu.unisys.academy.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import edu.unisys.academy.model.Alumno;
+import edu.unisys.academy.service.AlumnoService;
+
+/*
+ * RECIBO Y RESPONDO AL USUARIO HTTP
+ * - POSTMAN -
+ * 
+ * API REST sobre Alumnos
+ * - Leer todos los alumnos
+ * - Leer un alumno
+ * - Modificar un alumno
+ * - Borrar un alumno
+ * 
+ */
+
+//JSON: de texto a objeto: deserializar
+//JSON: de objeto a texto: serializar
+
+//GET http://localhost:8081/alumno/prueba
+
+@RestController // El serv espera mensajes con el cuerpo JSON y devuelve mensajes con el cuerpo JSON
+@RequestMapping("/alumno")
+public class AlumnoController {
+	
+	//GET http://localhost:8081/alumno/prueba
+	
+	@Autowired
+	private AlumnoService alumnoService;
+	
+	Logger log = LoggerFactory.getLogger(AlumnoController.class);
+	
+	@GetMapping("/prueba")
+	public Alumno pruebaAlumno() {
+		
+		Alumno alumno = null; // para Hibernate: alumno: estado TRANSIENT
+			
+			log.debug("Entrando en /prueba debug");
+			log.info("Entrando en /prueba info");
+			
+			alumno = new Alumno(); //Aquí el alumno está en estado TRANSIENT: no existe
+			alumno.setId(15L);
+			alumno.setNombre("Alicia");
+			alumno.setApellido("Morillo");
+			alumno.setEdad(34);
+		
+		return alumno;
+	}
+	
+	/**
+	 * ********************************************
+	 * INICIO DE ACCESO A BASE DATOS CON SPRINGDATA
+	 * ********************************************
+	 */
+	
+	@GetMapping //GET http://localhost:8081/alumno
+	public ResponseEntity<?> leerTodos(){ //con ResponseEntity<?> indico que devuelvo un mensaje HTTP y que el cuerpo lleva un tipo cualquiera (en JSON)
+		ResponseEntity<?> responseEntity = null;
+		Iterable<Alumno> listaAlumnos = null;
+		
+			listaAlumnos = this.alumnoService.findAll();
+			responseEntity = ResponseEntity.ok(listaAlumnos); //ya estoy componiendo el HTTP de respuesta, indicando ok en la cabecera (200), y en el cuerpo, la lista de alumnos
+			// La lista de alumnos se convierte en objeto json
+			
+		return responseEntity;
+	}
+	
+	@GetMapping("/buscarporrangoedad/{edad1}/{edad2}") //GET http://localhost:8081/alumno/6/90
+	public ResponseEntity<?> obtenerAlumnosPorRangoEdad(@PathVariable int edad1, @PathVariable int edad2){
+		ResponseEntity<?> responseEntity = null;
+		Iterable<Alumno> listaAlumnos = null;
+		
+			listaAlumnos = this.alumnoService.findByEdadBetween(edad1, edad2);
+			responseEntity = ResponseEntity.ok(listaAlumnos);
+			
+		return responseEntity;
+	}
+	
+	@GetMapping("/buscarpornombre/{patron}") //GET http://localhost:8081/alumno/Pepa
+	public ResponseEntity<?> obtenerAlumnosPorRangoEdad(@PathVariable String patron){  
+		ResponseEntity<?> responseEntity = null;
+		Iterable<Alumno> listaAlumnos = null;
+		
+			listaAlumnos = this.alumnoService.findByNombreLike(patron);
+			responseEntity = ResponseEntity.ok(listaAlumnos);
+			
+		return responseEntity;
+	}
+	
+	@GetMapping("/buscarpornombreoape/{patron}") //GET http://localhost:8081/alumno/Pepa
+	public ResponseEntity<?> busquedaAlumnosPorNombreoApe(@PathVariable String patron){  
+		ResponseEntity<?> responseEntity = null;
+		Iterable<Alumno> listaAlumnos = null;
+		
+			listaAlumnos = this.alumnoService.busquedaPorNombreOApellido(patron);
+			responseEntity = ResponseEntity.ok(listaAlumnos);
+			
+		return responseEntity;
+	}
+	
+	@GetMapping("/buscarpornombreoapenativa/{patron}") //GET http://localhost:8081/alumno/Pepa
+	public ResponseEntity<?> buscarAlumnosPorNombreoApeNativa (@PathVariable String patron)
+	{
+		ResponseEntity<?> responseEntity = null;
+		Iterable<Alumno> lista_alumnos = null;
+		
+			lista_alumnos = this.alumnoService.busquedaPorNombreOApellidoNativa(patron);
+			responseEntity = ResponseEntity.ok(lista_alumnos);
+		
+		return responseEntity;
+	}
+	
+	@GetMapping("/{id}") //GET http://localhost:8081/alumno/3
+	public ResponseEntity<?> leerAlumnoPorId (@PathVariable Long id){
+		ResponseEntity<?> responseEntity = null;
+		Optional<Alumno> optionalAlumno = null;
+		Alumno alumnoLeido = null;
+		
+			optionalAlumno = this.alumnoService.findById(id);
+			
+			if(optionalAlumno.isPresent()) {
+				//El ID existe: tenemos un alumno leído de la BD
+				alumnoLeido = optionalAlumno.get();
+				responseEntity = ResponseEntity.ok(alumnoLeido);
+			} else {
+				//El ID no existe
+				responseEntity = ResponseEntity.noContent().build();
+			}
+			
+		return responseEntity;
+	}
+	
+	// @param: br: es la info de los errores detectados
+	// @return: un mensaje de HTTP con los errores
+	private ResponseEntity<?> obtenerErrores(BindingResult br){
+		ResponseEntity<?> responseEntity = null;
+		List<ObjectError> listaErrores = null;
+		
+		listaErrores = br.getAllErrors();
+		responseEntity = ResponseEntity.badRequest().body(listaErrores);
+		
+		listaErrores.forEach(objetoError -> {
+			log.error(objetoError.toString());
+		});
+		
+		return responseEntity;
+	}
+	
+	@PostMapping //POST http://localhost:8081/alumno/
+	public ResponseEntity<?> insertarAlumno (@Valid @RequestBody Alumno alumno, BindingResult br){
+		ResponseEntity<?> responseEntity = null;
+		Alumno alumnoCreado = null;
+		
+			//Comprobar si tengo errores:
+			if(br.hasErrors()) {
+				log.error("El alumno trae errores - POST");
+				responseEntity = obtenerErrores(br);
+			} else {
+				log.debug("El alumno pasa la validación");
+				alumnoCreado = this.alumnoService.save(alumno);
+				responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(alumnoCreado); //201
+			}
+			
+		return responseEntity;
+	}
+	
+	@PutMapping("/{id}") //PUT http://localhost:8081/alumno/id
+	public ResponseEntity<?> modificarAlumno (@Valid @RequestBody Alumno alumno, BindingResult br, @PathVariable Long id){
+		ResponseEntity<?> responseEntity = null;
+		Alumno alumnoActualizado = null;
+		
+		if(br.hasErrors()) {
+			log.error("El alumno trae errores - PUT");
+			responseEntity = obtenerErrores(br);
+		} else {
+			alumnoActualizado = this.alumnoService.update(alumno, id);
+				if(alumnoActualizado != null) {
+					//Se ha modificado correctamente
+					responseEntity = ResponseEntity.ok(alumnoActualizado);
+				} else {
+					responseEntity = ResponseEntity.notFound().build();
+				}
+		}
+			
+		return responseEntity;
+	}
+	
+	@DeleteMapping("/{id}") //DELETE http://localhost:8081/alumno/id
+	public ResponseEntity<?> borrarAlumno (@PathVariable Long id){
+		ResponseEntity<?> responseEntity = null;
+			
+			this.alumnoService.deleteById(id);
+			responseEntity = ResponseEntity.ok().build();
+	
+		return responseEntity;
+	}
+	
+	/**
+	 * ********************************************
+	 * FIN DE ACCESO A BASE DATOS CON SPRINGDATA
+	 * ********************************************
+	 */
+	
+	/**
+	 * **********************************************
+	 * INICIO DE ACCESO A BASE DATOS CON HIBERNATE JPA
+	 * **********************************************
+	 */
+	
+	@GetMapping("/hbjpa") //GET http://localhost:8081/alumno/hbjpa
+	public ResponseEntity<?> leerTodosHbJpa () { //con ResponseEntity<?> indico que devuelvo un mensaje HTTP y que el cuerpo lleva un tipo cualquiera (en JSON)
+		ResponseEntity<?> responseEntity = null;
+		Iterable<Alumno> lista_alumnos = null;
+		
+			lista_alumnos = this.alumnoService.findAllHbJpa();
+			responseEntity = ResponseEntity.ok(lista_alumnos);//ya estoy componinedo el HTTP de respuesta, indicando OK en la cabecera (200) y en el cuerpo, la lista de alumnos
+			
+		return responseEntity;
+	}
+
+	@GetMapping("/hbjpa/{id}") //GET http://localhost:8081/alumno//hbjpa/3
+	public ResponseEntity<?> leerAlumnoPorIdHbJpa (@PathVariable Long id) {
+		ResponseEntity<?> responseEntity = null;
+		Alumno alumno_leido = null;
+		
+			alumno_leido = this.alumnoService.findByIdHbJpa(id);
+			if (alumno_leido!=null) {
+				//ese id existía y por tanto, tenemos un alumno que devolver
+				responseEntity = ResponseEntity.ok(alumno_leido);
+				
+			} else {
+				//TODO hacer el log
+				//ese id existía y por tanto, tenemos un alumno que devolver
+				responseEntity = ResponseEntity.noContent().build();
+			}
+		
+		return responseEntity;
+	}
+	
+	@PostMapping("/hbjpa") //POST http://localhost:8081/alumno/hbjpa
+	public ResponseEntity<?> insertarAlumnoHbJpa (@RequestBody Alumno alumno) {
+		ResponseEntity<?> responseEntity = null;
+		Alumno alumno_creado = null;
+		
+			alumno_creado = this.alumnoService.saveHbJpa(alumno);
+			responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(alumno_creado);
+		
+		return responseEntity;
+	}
+	
+	@PutMapping("/hbjpa/{id}") //PUT http://localhost:8081/alumno//hbjpa/id
+	public ResponseEntity<?> modificarAlumnoHbJpa (@RequestBody Alumno alumno, @PathVariable Long id) {
+		ResponseEntity<?> responseEntity = null;
+		Alumno alumno_actualizado = null;
+		
+			alumno_actualizado = this.alumnoService.updateHbJpa(alumno, id);
+			if (alumno_actualizado != null) {
+				//se ha MODIFICADO correctamente
+				responseEntity = ResponseEntity.ok(alumno_actualizado);
+			} else {
+				responseEntity = ResponseEntity.notFound().build();
+			}
+		
+		return responseEntity;
+	}
+	
+	@DeleteMapping("/hbjpa/{id}") //DELETE http://localhost:8081/alumno/hbjpa/id
+	public ResponseEntity<?> borrarAlumnoHbJpa (@PathVariable Long id) {
+		ResponseEntity<?> responseEntity = null;
+		
+			this.alumnoService.deleteByIdHbJpa(id);
+			responseEntity = ResponseEntity.ok().build();
+		
+		return responseEntity;
+	}
+
+	
+	/**
+	 * **********************************************
+	 * FIN DE ACCESO A BASE DATOS CON HIBERNATE JPA
+	 * **********************************************
+	 */
+
+}

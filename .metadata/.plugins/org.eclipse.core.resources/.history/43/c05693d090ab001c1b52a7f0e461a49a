@@ -1,0 +1,26 @@
+package edu.unisys.academy.repository;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import edu.unisys.academy.model.Alumno;
+
+public interface AlumnoRepositorySpringData extends CrudRepository<Alumno, Long> {
+	
+	//KEYWORD QUERIES
+	// 1. Obtener un listado de alumnos que esténen un rango de edad
+	public Iterable<Alumno> findByEdadBetween (int edadInicial, int edadFinal);
+	//2. Obtener un listado de alumnos cuyo nombre contenga un patrón
+	public Iterable<Alumno> findByNombreLike (String patron);
+	
+	
+	//JPQL / NamedQueries
+	//1. Obtener un listado de alumnos cuyo nombre o apellido coincida con un patrón
+	@Query("select a from Alumno a where a.nombre like %?1% or a.apellido like %?1%")
+	public Iterable<Alumno> busquedaPorNombreOApellido(String patron);
+	
+	
+	//Nativas
+	//1. VERSIÓN NATIVA: Obtener un listado de alumnos cuyo nombre o apellido coincida con un patrón
+	@Query(value = "select * from alumnos a where a.nombre like %?1% or a.apellido like %?1%", nativeQuery = true)
+	public Iterable<Alumno> busquedaPorNombreOApellido(String patron);
+}
